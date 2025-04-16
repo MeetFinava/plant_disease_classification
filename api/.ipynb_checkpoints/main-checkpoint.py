@@ -6,8 +6,9 @@ from io import BytesIO
 from PIL import Image
 import tensorflow as tf
 
-
 app= FastAPI()
+
+MODEL=tf.saved_model.load("D://Data Science//Potato diseases//saved_models//1")
 
 origins = [
     "http://localhost",
@@ -21,12 +22,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-
-MODEL=tf.keras.models.load_model("../saved_models/model.h5",compile=True,safe_mode=True,custom_objects=None)
-
 CLASS_NAMES=["Early Blight","Late Blight","healthy"]
 
+@app.get("/ping")
+async def ping():
+    return "Hello, I am alive"
 
 def read_file_as_image(data) -> np.ndarray:
     image = np.array(Image.open(BytesIO(data)))
@@ -36,13 +36,12 @@ def read_file_as_image(data) -> np.ndarray:
 async def predict(
     file: UploadFile = File(...)
 ):
-    
     image = read_file_as_image(await file.read())
-       
+    
     img_batch = np.expand_dims(image, 0)
     
     predictions = MODEL.predict(img_batch)
-    
+
     predicted_class = CLASS_NAMES[np.argmax(predictions[0])]
     
     confidence = np.max(predictions[0])
