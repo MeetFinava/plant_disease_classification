@@ -1,1 +1,10 @@
+
+# for tfserving
 docker run -t --rm -p 8502:8502 -v "E:/AI_ML/Plant Dieases Classification/Potato-diseases:/Potato-diseases" tensorflow/serving --rest_api_port=8502 --model_config_file=/Potato-diseases/models.config
+
+
+
+
+#react issue
+set NODE_OPTIONS=--openssl-legacy-provider
+
