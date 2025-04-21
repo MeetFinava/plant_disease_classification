@@ -23,9 +23,9 @@ app.add_middleware(
 
 
 
-MODEL=tf.keras.models.load_model("../saved_models/model.h5",compile=True,safe_mode=True,custom_objects=None)
+MODEL=tf.keras.models.load_model("../saved_models/model.h5",compile=False,safe_mode=True,custom_objects=None)
 
-CLASS_NAMES=["Early Blight","Late Blight","healthy"]
+CLASS_NAMES=["Potato_Early Blight","Potato_Late Blight","Potato_healthy"]
 
 
 def read_file_as_image(data) -> np.ndarray:
